@@ -48,14 +48,14 @@ const controller = {
 		let newProduct = {
 			id: +lastID + 1,
 			//detecto ultimo id y sumo uno
-			name: name.trim(),
-			description : description.trim(),
+			name,
+			description,
 			price: +price,
 			discount: +discount,
 			image: "default-image.png",
 			category,
 		}
-
+		
 		products.push(newProduct)
 		guardarJson(products)
 		return res.redirect('/products')
