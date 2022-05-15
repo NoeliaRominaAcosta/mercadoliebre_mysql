@@ -1,16 +1,13 @@
 const fs = require('fs');
 const path = require('path');
-const saveProducts = (products) => fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 3));
-//voy a sobreescribir el json y como esta parseado lo paso a string
-const toThousand = n => n.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-const productsFilePath = path.join(__dirname, '../data/productsDataBase.json');
+const products = require('../data/productsDataBase.json');
+const guardarJson= (products)=>fs.writeFileSync(path.resolve(__dirname,'..','data', 'productsDataBase.json'), JSON.stringify(products, null, 3),'utf-8')
+	
 
-//hago esta function para que vuelva a leer el array cuando se modifica
-const readProducts = () => {
-	const products = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-	//quito decimales con toFixed y luego agrega un punto cada tres decimales	
-	return products
-}
+//voy a sobreescribir el json y como esta parseado lo paso a string. recibe el array de products
+const toThousand = n => n.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+
 
 
 
@@ -18,7 +15,6 @@ const readProducts = () => {
 const controller = {
 	// Root - Show all products
 	index: (req, res) => {
-		let products = readProducts();
 		//los productos guardados en json que se leerán nuevamente
 		return res.render('products', {
 			products,
@@ -28,11 +24,12 @@ const controller = {
 
 	// Detail - Detail from one product
 	detail: (req, res) => {
-		let products = readProducts();
+	
 		const product = products.find(product => product.id === +req.params.id)
 		//va + porque viene como string y en json tengo el id coomo number asi que parseo
 		return res.render('detail', {
-			product
+			product,
+			toThousand
 		})
 	},
 
@@ -40,41 +37,74 @@ const controller = {
 	create: (req, res) => {
 		return res.render('product-create-form')
 	},
-	
+
 	// Create -  Method to store
 	store: (req, res) => {
-		let products = readProducts();
-		//viene por formulario y queremos ocultar la info por eso viene por body
-		const {name, price, discount, description, category} = req.body;
+		//viene por body, ocultamos la info
+		
+		const {name,price,discount,description,category} = req.body;
+		
+		let lastID = products[products.length - 1].id;
 		let newProduct = {
-			id : products[products.length -1].id +1,
-			name : name.trim(),
-			//trim le quita los espacios al principio y al final
+			id: +lastID + 1,
+			//detecto ultimo id y sumo uno
+			name: name.trim(),
 			description : description.trim(),
-			price : +price,
-			discount : +discount,
-			image : "default-image.png",
-			category
-			//cateogry no lleva nada porque es cerrado al ser un select
+			price: +price,
+			discount: +discount,
+			image: "default-image.png",
+			category,
 		}
 
 		products.push(newProduct)
-		saveProducts(products)
+		guardarJson(products)
 		return res.redirect('/products')
 	},
 
 	// Update - Form to edit
 	edit: (req, res) => {
-		// Do the magic
+		
+		let product = products.find(product => product.id === +req.params.id)
+
+		return res.render('product-edit-form', {
+			product
+		})
 	},
 	// Update - Method to update
 	update: (req, res) => {
-		// Do the magic
+		
+/* Destructuring the req.body object. */
+		const {id} = req.params
+		const {name,price,discount,description,category} = req.body
+		
+		/* Iterating over the products array and returning a new array with the modified product. */
+		const productsModify = products.map(product => {
+			if (product.id === +id) {
+				let productModify = {
+					...product,
+					name : name.trim(),
+					price : +price,
+					discount: +discount,
+					description: description.trim(),
+					category
+				}
+				return productModify
+			}
+			return product
+			//el producto tal como estaba. 
+		})
+
+		/* Guarda los productos modificados en el json */
+		guardarJson(productsModify)
+		return res.redirect('/products')
 	},
 
 	// Delete - Delete one product from DB
-	destroy : (req, res) => {
-		// Do the magic
+	destroy: (req, res) => {
+		const {id} = req.params;
+		const productsDelete = products.filter(product => product.id !== +id);
+		guardarJson(productsDelete)
+		return res.redirect('/products')
 	}
 };
 
