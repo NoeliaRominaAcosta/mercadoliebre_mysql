@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('partials/head', {title: 'Registro'}) %>
+<body>
+	<!-- Header -->
+	<%- include('partials/headerNavbar') %>
+	<!-- /Header -->
+
+	<div class="container products-wrapper">
+		<div class="row">
+			<div class="col-12">
+				<h2 class="products-title">Formulario de creación de usuario</h2>
+			</div>
+		</div>
+		<div class="col-12">
+			<form action="" method="POST">
+				<div class="row product-detail">
+					<div class="col-12 col-md-6">
+						<label for="name" class="form-label">Nombre</label>
+						<input type="text" id="name" name="name" class="form-input" value="<%= locals.old && old.name ? old.name : null %>">
+						<span><%= locals.errors && errors.name ? errors.name.msg : null %></span>
+					</div>
+					<div class="col-12 col-md-6">
+						<label for="name" class="form-label">Apellido</label>
+						<input type="text" id="name" name="surname" class="form-input" value="<%= locals.old && old.surname ? old.surname : null %>">
+						<span><%= locals.errors && errors.surname ? errors.surname.msg : null %></span>
+
+					</div>
+                    <div class="col-12 col-md-6">
+						<label for="" class="form-label">Email</label>
+						<input type="email" id="" name="email" class="form-input" value="<%= locals.old && old.email ? old.email : null %>">
+						<span><%= locals.errors && errors.email ? errors.email.msg : null %></span>
+
+					</div>
+					<div class="col-12 col-md-6">
+						<label for="" class="form-label">Contraseña</label>
+						<input type="password" id="" name="password" class="form-input" placeholder="Minimo 6 caracteres">
+						<span><%= locals.errors && errors.password ? errors.password.msg : null %></span>
+
+					</div>
+					<div class="col-12 col-md-6">
+						<label for="" class="form-label">Repetir contraseña</label>
+						<input type="password" id="" name="password2" class="form-input"> 
+						<span><%= locals.errors && errors.password2 ? errors.password2.msg : null %></span>
+
+					</div>
+                    <div class="col-12 col-md-6">
+						<input type="checkbox" id="" name="checkbox">
+						<label for="" class="form-label">Terminos y condiciones</label>
+						<span><%= locals.errors && errors.checkbox ? errors.checkbox.msg : null %></span>
+
+					</div>
+					<div class="col-12">
+						<button type="submit" class="buy-now-button">Registrate</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+	<!-- /todos los productos -->
+
+	<!-- footer -->
+	<%- include('partials/footer') %>
+	<!-- /footer -->
+</body>	
+</html>

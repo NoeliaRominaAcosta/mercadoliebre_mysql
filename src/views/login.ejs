@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('partials/head', {title: 'Entrar'}) %>
+<body>
+	<!-- Header -->
+	<%- include('partials/headerNavbar') %>
+	<!-- /Header -->
+
+	<div class="container products-wrapper">
+		<div class="row">
+			<div class="col-12">
+				<h2 class="products-title">Iniciar sesión</h2>
+			</div>
+		</div>
+		<div class="col-12">
+			<form action="" method="POST">
+				<div class="row product-detail">
+					
+                    <div class="col-12 col-md-6">
+						<label for="" class="form-label">Usuario</label>
+						<input type="email" id="" name="email" class="form-input" placeholder="Tu email registrado">
+						<span><%= locals.errors && errors.email ? errors.email.msg : null %></span>
+
+					</div>
+					<div class="col-12 col-md-6">
+						<label for="" class="form-label">Contraseña</label>
+						<input type="password" id="" name="password" class="form-input">
+						<span><%= locals.errors && errors.password ? errors.password.msg : null %></span>
+
+					</div>
+					
+                    <div class="col-12 col-md-6">
+						<input type="checkbox" id="" name="session">
+						<label for="" class="form-label">Mantener mi sesión iniciada</label>
+					
+
+					</div>
+					<div class="col-12">
+						<button type="submit" class="buy-now-button">Registrate</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+	<!-- /todos los productos -->
+
+	<!-- footer -->
+	<%- include('partials/footer') %>
+	<!-- /footer -->
+</body>	
+</html>
