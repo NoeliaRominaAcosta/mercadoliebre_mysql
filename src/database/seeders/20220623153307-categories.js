@@ -1,25 +1,34 @@
-'use strict';
+"use strict";
+
+const categories = [
+  {
+    name: "Hogar",
+    createdAt: new Date(),
+  },
+  {
+    name: "Informática",
+    createdAt: new Date(),
+  },
+  {
+    name: "Audio y Video",
+    createdAt: new Date(),
+  },
+  {
+    name: "Celulares",
+    createdAt: new Date(),
+  },
+  {
+    name: "Tiempo Libre",
+    createdAt: new Date(),
+  },
+];
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
-   
-      await queryInterface.bulkInsert('Categories', [{
-        name: 'visited',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        deletedAt : new Date()
-      },
-    {
-      name: 'in-sale',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      deletedAt : new Date()
-    }
-  ], {});
-   
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert("Categories", categories, {});
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Categories',null, {})
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("Categories", null, {});
+  },
 };

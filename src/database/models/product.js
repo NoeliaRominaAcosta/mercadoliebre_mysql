@@ -9,11 +9,17 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-     static associate(models) {//esto no afecta workbench
+    static associate(models) {
       // define association here
       Product.belongsTo(models.Category,{
         as : 'category',
-        foreignKey : 'categoryId' //esta fk esta en el modelo de productos
+        foreignKey : 'categoryId'
+      });
+
+      Product.hasMany(models.Image,{
+        as : 'images',
+        foreignKey : 'productId',
+        onDelete: 'cascade'
       })
     }
   }
@@ -22,10 +28,11 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.INTEGER,
     discount: DataTypes.INTEGER,
     description: DataTypes.STRING(500),
-    categoryId: DataTypes.INTEGER
+    categoryId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Product',
+    paranoid : true
   });
   return Product;
 };
