@@ -51,7 +51,7 @@ Crear el arhivo <code>.env</code> y darle valor a las variables de entorno segú
 ```
 DB_USERNAME=
 DB_PASSWORD=
-DB_DATABASE=mercadoLiebre_db14
+DB_DATABASE=mercadoliebre
 DB_PORT=3306
 DB_HOST=127.0.0.1
 
